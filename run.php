@@ -181,8 +181,9 @@ foreach ($vendors as $vendor) {
                 foreach ($arr as $a) {
                     if ($a['name'] == $name && $a['old_version'] == $old_version) {
                         $new_version = $a['new_version'];
-                        // $j[$r][$name] = $new_version;
-                        $c = str_replace("\"$name\": \"$old_version\"", "\"$name\": \"$new_version\"", $c);
+                        if (!str_starts_with($old_version, $new_version)) {
+                            $c = str_replace("\"$name\": \"$old_version\"", "\"$name\": \"$new_version\"", $c);
+                        }
                     }
                 }
             }
