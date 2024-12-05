@@ -138,6 +138,9 @@ foreach ($lines as $line) {
         if (str_contains($last, 'phpunit')) {
             continue;
         }
+        if (str_contains($last, 'phpunit')) {
+            continue;
+        }
         $replace = "^" . preg_replace('/(\d+\.\d+)\.\d+/', '$1', $new);
         $replace = str_replace('^^', '^', $replace);
         [$name, $version] = explode(':', $last);
@@ -161,11 +164,13 @@ foreach ($vendors as $vendor) {
     foreach ($files as $file) {
         if (!$file) continue;
         if (str_contains($file, "/tinymce/")) continue;
+        if (str_contains($file, "-plugin")) continue; // vendor + recipe plgun shared for cms 5 and cms 6
         if (preg_match("#/tests/#", $file)) continue;
         if (str_contains($file, "webauthn-authenticator")) continue;
         $c = file_get_contents($file);
         $j = json_decode($c, true);
-        foreach (["require", "require-dev"] as $r) {
+        // foreach (["require", "require-dev"] as $r) {
+        foreach (["require"] as $r) {
             if (!isset($j[$r])) continue;
             foreach ($j[$r] as $k => $v) {
                 if (str_starts_with($k, "silverstripe/")) continue;
