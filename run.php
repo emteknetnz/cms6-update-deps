@@ -138,7 +138,7 @@ foreach ($lines as $line) {
         if (str_contains($last, 'phpunit')) {
             continue;
         }
-        if (str_contains($last, 'phpunit')) {
+        if (str_contains($last, 'silverstripe-themes')) {
             continue;
         }
         $replace = "^" . preg_replace('/(\d+\.\d+)\.\d+/', '$1', $new);
@@ -164,6 +164,8 @@ foreach ($vendors as $vendor) {
     foreach ($files as $file) {
         if (!$file) continue;
         if (str_contains($file, "/tinymce/")) continue;
+        if (str_contains($file, "/closure")) continue;
+        if (str_contains($file, "/supported-modules")) continue;
         if (str_contains($file, "-plugin")) continue; // vendor + recipe plgun shared for cms 5 and cms 6
         if (preg_match("#/tests/#", $file)) continue;
         if (str_contains($file, "webauthn-authenticator")) continue;
